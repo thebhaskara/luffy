@@ -1,0 +1,31 @@
+{
+  "name": "luffy",
+  "version": "1.0.0",
+  "description": "A nodejs atarter application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thebhaskara/luffy.git"
+  },
+  "keywords": [
+    "nodejs"
+  ],
+  "author": "Bhaskara Rama Sai Busam",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/thebhaskara/luffy/issues"
+  },
+  "homepage": "https://github.com/thebhaskara/luffy#readme",
+  "dependencies": {
+    "crossroads": "^0.12.2",
+    "express": "^4.14.0",
+    "lodash": "^4.17.4",
+    "page": "^1.7.1",
+    "pakkajs": "^1.1.7",
+    "requirejs-text": "^2.0.15",
+    "roboto-fontface": "^0.6.0"
+  }
+}
