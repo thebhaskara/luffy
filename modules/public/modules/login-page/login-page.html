@@ -1,0 +1,26 @@
+<div class="flex-row">
+    <div class="grow"></div>
+    <div class="flex-column">
+        <div class="grow"></div>
+        <div>
+            <h1>Login</h1>
+            <div>
+                <input type="type" name="" placeholder="username..." bind-property="data.username">
+            </div>
+            <div>
+                <input type="password" name="" placeholder="password..." bind-property="data.password">
+            </div>
+            <div bind-text="message">
+            </div>
+            <div class="flex-row">
+                <div class="grow">
+                    <div><a href="#!forgot-password">forgot password?</a></div>
+                    <div><a href="#!signup" click-handle="signup">sign up</a></div>
+                </div>
+                <button click-handle="login">Submit</button>
+            </div>
+        </div>
+        <div class="grow"></div>
+    </div>
+    <div class="grow"></div>
+</div>

@@ -1,18 +1,15 @@
-var express = require('express');
-var app = express();
-var baseApiUrl = '/api';
+var db = require('./modules/database/index');
+var service = require('./modules/service/index');
+var rest = require('./modules/rest/index');
 
-var getApiUrl = function(url) {
-    return baseApiUrl + url;
-};
-
-app.use(express.static('public'))
-app.use('/node_modules', express.static('node_modules'));
-
-app.get('/as', function(req, res) {
-    res.send('Hello World!')
+db.init().then(function() {
+	// creating user
+    // service.user.create({
+    //     firstName: 'Luffy',
+    //     lastName: 'Monkey D.',
+    //     password: 'luffy',
+    //     username: 'luffy'
+    // });
 });
 
-app.listen(3000, function() {
-    console.log('Example app listening on port 3000!')
-});
+rest();

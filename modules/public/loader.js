@@ -4,6 +4,7 @@ require.config({
         'page': 'node_modules/page/page',
         'pakka': 'node_modules/pakkajs/pakka',
         'lodash': 'node_modules/lodash/lodash',
+        'reqwest': 'node_modules/reqwest/reqwest',
     },
 
     shim: {

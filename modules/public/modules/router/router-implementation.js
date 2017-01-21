@@ -21,7 +21,7 @@ define(['page'], function(page) {
         page(route, function() {
             var args = arguments;
             if (authCallbacks.check) {
-                authCallbacks.check(function() {
+                authCallbacks.check().then(function() {
                     callback.apply({}, args);
                 }, authCallbacks.failed || function() {});
             }
