@@ -1,8 +1,8 @@
 define([
     'app',
     'pakka',
-    'text!modules/login-page/login-page.html',
-    'text!modules/login-page/login-page.css',
+    'text!modules/views/login-page/login-page.html',
+    'text!modules/views/login-page/login-page.css',
     'modules/ajax/ajax',
     'modules/router/router-implementation',
 ], function(app, pakka, Markup, StyleSheet, ajax, router) {

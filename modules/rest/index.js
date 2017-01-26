@@ -15,8 +15,11 @@ module.exports = function() {
     app.use(cookieParser());
     app.use(session());
 
-    app.use(express.static('modules/public'))
+    app.use(express.static('modules/public'));
+    app.use(express.static('node_modules/material-design-icons/iconfont'));
     app.use('/node_modules', express.static('node_modules'));
+    app.use('/fonts', express.static('node_modules/roboto-fontface/fonts'));
+    app.use('/fonts', express.static('node_modules/roboto-fontface/fonts'));
 
 
     // parse application/x-www-form-urlencoded
@@ -31,4 +34,4 @@ module.exports = function() {
     app.listen(3000, function() {
         console.log('Example app listening on port 3000!')
     });
-}
+};

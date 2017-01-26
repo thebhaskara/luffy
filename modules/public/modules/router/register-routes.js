@@ -5,10 +5,31 @@ define([
 ], function(app, router, ajax) {
 
     var showPage = function(settings) {
+        if (settings.header) {
+            showHeader(settings.header);
+        } else {
+            removeHeader();
+        }
         require([settings.pageUrl], function(PageView) {
             app.base.$set('page', new PageView());
         })
     };
+
+    var header,
+        showHeader = function(settings) {
+            if (header) {
+                app.base.$set('header', header);
+                header.$set('settings', settings);
+            } else {
+                require(['modules/views/header/header'], function(Header) {
+                    header = new Header();
+                    showHeader(settings);
+                });
+            }
+        },
+        removeHeader = function() {
+            app.base.$set('header', false);
+        };
 
     var check = function() {
         return ajax.checkLogin();
@@ -25,19 +46,20 @@ define([
 
     router.addRoute('login', function() {
         showPage({
-            pageUrl: 'modules/login-page/login-page'
+            pageUrl: 'modules/views/login-page/login-page'
         });
     });
 
     router.addRoute('signup', function() {
         showPage({
-            pageUrl: 'modules/signup-page/signup-page'
+            pageUrl: 'modules/views/signup-page/signup-page'
         });
     });
 
     router.addAuthenticatedRoute('home', function() {
         showPage({
-            pageUrl: 'modules/home-page/home-page'
+            pageUrl: 'modules/views/home-page/home-page',
+            header: true
         });
     });
 
