@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var bcrypt = require('bcrypt');
 
 var encryptPassword = function(password, callback) {
@@ -40,8 +41,14 @@ module.exports = {
                 if (err)
                     reject(err);
 
-                userObj.password = hash;
-                repos.user.create(userObj).then(resolve);
+                delete userObj.password;
+                repos.user.create(userObj).then(function(user) {
+                    repos.password.create({
+                        password: hash
+                    }).then(function(password) {
+                        user.addPassword(password).then(resolve);
+                    })
+                });
 
             });
 
@@ -53,24 +60,27 @@ module.exports = {
             repos.user
                 .getUserByUsername(cred.username)
                 .then(function(user) {
-                    comparePassword(cred.password, user.password, function(err, isMatch) {
-                        if (err) {
-                            reject({
-                                reason: 'something went wrong',
-                                error: err
-                            });
-                        } else {
-                            if (isMatch) {
-                                resolve(user);
-                            } else {
+                    user.getPasswords().then(function(passwords) {
+                        var p = _.last(passwords);
+                        comparePassword(cred.password, p.password, function(err, isMatch) {
+                            if (err) {
                                 reject({
-                                    reason: 'invalid credentials',
+                                    reason: 'something went wrong',
+                                    error: err
                                 });
+                            } else {
+                                if (isMatch) {
+                                    resolve(user);
+                                } else {
+                                    reject({
+                                        reason: 'invalid credentials',
+                                    });
+                                }
                             }
-                        }
-                    })
+                        });
+                    });
                 })
         });
     },
-    
+
 }

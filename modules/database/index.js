@@ -2,6 +2,7 @@ var _ = require('lodash');
 
 var repos = {
 	user: require('./userRepo'),
+	password: require('./passwordRepo'),
 }
 
 repos.init = function(){

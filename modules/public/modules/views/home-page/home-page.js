@@ -10,6 +10,10 @@ define([
         name: 'home-page',
         html: Markup,
         css: StyleSheet,
-        controller: function(context) {}
+        controller: function(context) {
+            context.signup = function() {
+                console.log(context.$get('data'));
+            }
+        }
     })
 })
