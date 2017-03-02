@@ -1,19 +1,15 @@
 var _ = require('lodash');
+var db = require('./db');
 
 var repos = {
 	user: require('./userRepo'),
 	password: require('./passwordRepo'),
+	note: require('./noteRepo'),
+	tag: require('./tagRepo'),
 }
 
 repos.init = function(){
-	var promises = [];
-	_.each(repos, function(repo){
-		if(repo.sync){
-			promises.push(repo.sync());
-		}
-	});
-
-	return Promise.all(promises);
+	return db.init();
 }
 
 module.exports = repos;

@@ -1,23 +1,31 @@
 var _ = require('lodash');
 var bcrypt = require('bcrypt');
 
-var encryptPassword = function(password, callback) {
-    bcrypt.genSalt(10, function(err, salt) {
-        if (err)
-            return callback(err);
+var encryptPassword = function(password) {
+    return new Promise(function(resolve, reject) {
 
-        bcrypt.hash(password, salt, function(err, hash) {
-            return callback(err, hash);
+        bcrypt.genSalt(10, function(err, salt) {
+            if (err)
+                return reject(err);
+
+            bcrypt.hash(password, salt, function(err, hash) {
+                if (err) reject(err);
+                else resolve(hash);
+                // return resolve(err, hash);
+            });
+
         });
-
     });
 };
 
-var comparePassword = function(password, userPassword, callback) {
-    bcrypt.compare(password, userPassword, function(err, isPasswordMatch) {
-        if (err)
-            return callback(err);
-        return callback(null, isPasswordMatch);
+var comparePassword = function(password, userPassword) {
+    return new Promise(function(resolve, reject) {
+        bcrypt.compare(password, userPassword, function(err, isPasswordMatch) {
+            if (err)
+                return reject(err);
+            else
+                return resolve(isPasswordMatch);
+        });
     });
 };
 
@@ -34,53 +42,66 @@ module.exports = {
 
     },
     create: function(userObj) {
-        return new Promise(function(resolve, reject) {
-
-            encryptPassword(userObj.password, function(err, hash) {
-
-                if (err)
-                    reject(err);
-
-                delete userObj.password;
-                repos.user.create(userObj).then(function(user) {
-                    repos.password.create({
-                        password: hash
-                    }).then(function(password) {
-                        user.addPassword(password).then(resolve);
-                    })
-                });
-
+        var _user, _hash;
+        return encryptPassword(userObj.password).then(function(hash) {
+            delete userObj.password;
+            _hash = hash;
+            return repos.user.create(userObj);
+        }).then(function(user) {
+            _user = user;
+            return repos.password.create({
+                password: _hash
             });
-
+        }).then(function(password) {
+            return _user.addPassword(password);
         });
     },
     check: function(cred) {
-        return new Promise(function(resolve, reject) {
-            // repos.user.
-            repos.user
-                .getUserByUsername(cred.username)
-                .then(function(user) {
-                    user.getPasswords().then(function(passwords) {
-                        var p = _.last(passwords);
-                        comparePassword(cred.password, p.password, function(err, isMatch) {
-                            if (err) {
-                                reject({
-                                    reason: 'something went wrong',
-                                    error: err
-                                });
-                            } else {
-                                if (isMatch) {
-                                    resolve(user);
-                                } else {
-                                    reject({
-                                        reason: 'invalid credentials',
-                                    });
-                                }
-                            }
+        var _user;
+        var _isMatched = false;
+        return repos.user
+            .getUserByUsername(cred.username)
+            .then(function(user) {
+                _user = user;
+                return user.getPasswords();
+            }).then(function(passwords) {
+                return checkPasswords(passwords, _user, cred.password);
+            });
+
+        function checkPasswords(passwords, user, inputPassword) {
+            return new Promise(function(resolve, reject) {
+                if (passwords.length > 0 && !_isMatched) {
+
+                    var row = passwords.pop();
+                    comparePassword(cred.password, row.password).catch(function(err) {
+                        reject({
+                            reason: 'something went wrong',
+                            error: err
                         });
+                    }).then(function(isMatch) {
+
+                        if (isMatch) {
+                            _isMatched = true;
+                            resolve(user);
+                        } else {
+                            resolve(false);
+                        }
                     });
-                })
-        });
+
+                } else {
+
+                    reject({
+                        reason: 'invalid credentials',
+                    });
+                }
+            }).then(function(_user) {
+                if (_user == false) {
+                    return checkPasswords(passwords, user, inputPassword);
+                } else {
+                    return _user;
+                }
+            });
+        }
     },
 
 }

@@ -30,6 +30,7 @@ module.exports = function() {
 
     require('./login-controller')(app, getApiUrl);
     require('./signup-controller')(app, getApiUrl);
+    require('./note-controller')(app, getApiUrl);
 
     app.listen(3000, function() {
         console.log('Example app listening on port 3000!')

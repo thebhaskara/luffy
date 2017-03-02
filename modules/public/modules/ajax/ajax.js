@@ -37,11 +37,29 @@ define([
             return ajax(options);
         },
         signup: function(options) {
-            
+
             options = _.pick(options, ['data', 'success', 'error', 'complete']);
 
             options.url = '/api/signup';
             options.method = 'post';
+
+            return ajax(options);
+        },
+        getAllNotes: function(options) {
+
+            options = _.pick(options, ['data', 'success', 'error', 'complete']);
+
+            options.url = '/api/note';
+            // options.method = options.data.id ? 'put' : 'post';
+
+            return ajax(options);
+        },
+        saveNote: function(options) {
+
+            options = _.pick(options, ['data', 'success', 'error', 'complete']);
+
+            options.url = '/api/note';
+            options.method = options.data.id ? 'put' : 'post';
 
             return ajax(options);
         }

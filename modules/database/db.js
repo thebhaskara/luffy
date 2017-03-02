@@ -23,5 +23,8 @@ module.exports = {
         integer: Sequelize.INTEGER,
         boolean: Sequelize.BOOLEAN,
         text: Sequelize.TEXT,
+    },
+    init: function(){
+        return sequelize.sync();
     }
 };

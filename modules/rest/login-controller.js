@@ -25,6 +25,7 @@ module.exports = function(app, getApiUrl) {
             }).catch(function(err) {
                 console.log(err);
                 res.status(403);
+                res.send(err);
             })
         } else {
             res.send(false);
