@@ -62,6 +62,15 @@ define([
             options.method = options.data.id ? 'put' : 'post';
 
             return ajax(options);
+        },
+        deleteNote: function(options) {
+
+            options = _.pick(options, ['data', 'success', 'error', 'complete']);
+
+            options.url = '/api/note';
+            options.method = 'delete';
+
+            return ajax(options);
         }
     };
 })

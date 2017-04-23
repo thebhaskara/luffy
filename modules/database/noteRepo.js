@@ -17,21 +17,24 @@ var Table = db.handler.define('note', {
 Table.hasMany(TagTable.getHandle());
 Table.belongsTo(UserTable.getHandle());
 
-module.exports = {
-    getHandle: function() {
-        return Table;
-    },
-    findAll: function() {
-        return Table.findAll();
-    },
-    create: function(Obj) {
-        return Table.create(Obj);
-    },
-    update: function(Obj) {
-        return Table.update(Obj, {
-            where: {
-                id: Obj.id
-            }
-        });
-    },
-}
+var operations = db.getBasicOperations(Table);
+
+module.exports = operations;
+// module.exports = {
+//     getHandle: function() {
+//         return Table;
+//     },
+//     findAll: function() {
+//         return Table.findAll();
+//     },
+//     create: function(Obj) {
+//         return Table.create(Obj);
+//     },
+//     update: function(Obj) {
+//         return Table.update(Obj, {
+//             where: {
+//                 id: Obj.id
+//             }
+//         });
+//     },
+// }

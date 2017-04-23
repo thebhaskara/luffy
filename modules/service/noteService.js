@@ -20,4 +20,7 @@ module.exports = {
     update: function(note) {
         return repos.note.update(note);
     },
+    delete: function(note) {
+        return repos.note.delete(note);
+    },
 }

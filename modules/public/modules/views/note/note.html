@@ -1,3 +1,11 @@
-<div class="flex-row">
-    <div class="grow edit" bind-property="text" bind-element="inputElement" contenteditable="true" keydown-handle="checkEnter" blur-handle="blur"></div>
+<div>
+    <div class="flex-row">
+        <div class="grow edit" bind-property="text" bind-element="inputElement" contenteditable="true" keydown-handle="checkEnter" blur-handle="blur"></div>
+        <button class="icon" bind-class="showDeletable" click-handle="deleteNote">
+            <i class="material-icons">close</i>
+        </button>
+    </div>
+    <div bind-component="selectTag">
+    	
+    </div>
 </div>

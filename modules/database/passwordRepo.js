@@ -12,15 +12,21 @@ var db = require('./db'),
         }
     });
 
-module.exports = {
-    getHandle: function() {
-        return PasswordTable;
-    },
-    sync: function() {
-        return PasswordTable.sync();
-    },
-    create: function(obj) {
-        return PasswordTable.create(obj);
-    },
 
-}
+
+var operations = db.getBasicOperations(PasswordTable);
+
+module.exports = operations;
+
+// module.exports = {
+//     getHandle: function() {
+//         return PasswordTable;
+//     },
+//     sync: function() {
+//         return PasswordTable.sync();
+//     },
+//     create: function(obj) {
+//         return PasswordTable.create(obj);
+//     },
+
+// }

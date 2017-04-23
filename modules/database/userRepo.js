@@ -23,17 +23,24 @@ var UserTable = db.handler.define('user', {
 
 UserTable.hasMany(PasswordTable.getHandle());
 
-module.exports = {
-    getHandle: function() {
-        return UserTable;
-    },
-    sync: function() {
-        return UserTable.sync();
-    },
-    create: function(userObj) {
-        return UserTable.create(userObj);
-    },
-    getUserByUsername: function(username) {
-        return UserTable.findOne({ where: { username: username } });
-    }
+var operations = db.getBasicOperations(UserTable);
+operations.getUserByUsername = function(username) {
+    return this.table.findOne({ where: { username: username } });
 }
+
+module.exports = operations;
+
+// module.exports = {
+//     getHandle: function() {
+//         return UserTable;
+//     },
+//     sync: function() {
+//         return UserTable.sync();
+//     },
+//     create: function(userObj) {
+//         return UserTable.create(userObj);
+//     },
+//     getUserByUsername: function(username) {
+//         return UserTable.findOne({ where: { username: username } });
+//     }
+// }

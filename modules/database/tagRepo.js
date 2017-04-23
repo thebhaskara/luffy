@@ -12,14 +12,18 @@ var Table = db.handler.define('tag', {
     }
 });
 
-module.exports = {
-    getHandle: function() {
-        return Table;
-    },
-    sync: function() {
-        return Table.sync();
-    },
-    create: function(Obj) {
-        return Table.create(Obj);
-    },
-}
+var operations = db.getBasicOperations(Table);
+
+module.exports = operations;
+
+// module.exports = {
+//     getHandle: function() {
+//         return Table;
+//     },
+//     sync: function() {
+//         return Table.sync();
+//     },
+//     create: function(Obj) {
+//         return Table.create(Obj);
+//     },
+// }

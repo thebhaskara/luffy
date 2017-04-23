@@ -19,6 +19,11 @@ button {
     border: none;
 }
 
+button.icon {
+    padding: 3px;
+    line-height: 1;
+}
+
 button:focus,
 button:active:focus,
 button.active:focus,

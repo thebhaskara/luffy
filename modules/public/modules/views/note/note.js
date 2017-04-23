@@ -4,7 +4,8 @@ define([
     'text!modules/views/note/note.html',
     'text!modules/views/note/note.css',
     'modules/ajax/ajax',
-], function(app, pakka, Markup, StyleSheet, ajax) {
+    'modules/views/select/select',
+], function(app, pakka, Markup, StyleSheet, ajax, Select) {
     return pakka({
         name: 'note',
         html: Markup,
@@ -21,6 +22,20 @@ define([
                     context.$set('id', note.id);
                     context.$set('text', note.text);
                     context.$set('enterPressed');
+                })
+            }
+
+            function deleteNote() {
+                var id = context.$get('id');
+
+                if(!id) return;
+
+                ajax.deleteNote({
+                    data: {
+                        id: id
+                    }
+                }).then(function(note) {
+                    context.$destroy();
                 })
             }
 
@@ -63,6 +78,34 @@ define([
                 el.focus();
                 isDirty = false;
             }
+
+            context.deleteNote = function(event){
+                event.preventDefault();
+                deleteNote();
+            }
+
+            var selectTag = new Select();
+            context.$set('selectTag', selectTag);
+            selectTag.$set('items', [
+                'asdf', 
+                'asdf sdf asdf',
+                'asdf sdf asdf',
+                'asdf sdf asdf',
+                'asdf sdf asdf',
+                'asdf sdf asdf',
+                'asdf sdf asdf',
+                'asdf sdf asdf',
+                'asdf sdf asdf',
+                'asdf sdf asdf',
+                'asdf sdf asdf',
+                'asdf sdf asdf',
+                'asdf sdf asdf',
+                'asdf sdf asdf',
+                'asdf sdf asdf',
+                'asdf sdf asdf',
+                'asdf sdf asdf',
+                'asdf sdf asdf',
+            ]);
         }
     })
 })

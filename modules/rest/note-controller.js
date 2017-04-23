@@ -35,4 +35,16 @@ module.exports = function(app, getApiUrl) {
             res.send(err);
         });
     });
+
+    app.delete(getApiUrl('/note'), auth(), function(req, res) {
+        noteService.delete({
+            id: req.body.id
+        }).then(function(notes) {
+            res.send(req.body);
+        }).catch(function(err) {
+            console.log(err);
+            res.status(500);
+            res.send(err);
+        });
+    });
 }

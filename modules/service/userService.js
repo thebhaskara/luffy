@@ -1,5 +1,5 @@
 var _ = require('lodash');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 
 var encryptPassword = function(password) {
     return new Promise(function(resolve, reject) {

@@ -1,0 +1,23 @@
+.select {
+    display: inline-block;
+    position: relative;
+}
+
+.select .selectable {
+    border: 1px solid #eee;
+}
+
+.select .flyout {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #ffffff;
+    border: 1px solid #eee;
+    min-width: 100%;
+    z-index: 10;
+}
+
+.select .flyout.open {
+    display: block;
+}

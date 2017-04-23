@@ -1,0 +1,12 @@
+<div>
+    <div class="flex-row selectable">
+        <input class="grow" type="text" name="" bind-property="searchKey">
+        <button class="icon" click-handle="toggleFlyout">
+            <i class="material-icons">arrow_drop_down</i>
+        </button>
+    </div>
+    <div class="flyout" bind-class="openCloseClass">
+        <ul class="menu" bind-components="menuItems" bind-element="menuElement">
+        </ul>
+    </div>
+</div>
