@@ -28,7 +28,7 @@ define([
             function deleteNote() {
                 var id = context.$get('id');
 
-                if(!id) return;
+                if (!id) return;
 
                 ajax.deleteNote({
                     data: {
@@ -79,33 +79,20 @@ define([
                 isDirty = false;
             }
 
-            context.deleteNote = function(event){
+            context.deleteNote = function(event) {
                 event.preventDefault();
                 deleteNote();
             }
 
             var selectTag = new Select();
             context.$set('selectTag', selectTag);
-            selectTag.$set('items', [
-                'asdf', 
-                'asdf sdf asdf',
-                'asdf sdf asdf',
-                'asdf sdf asdf',
-                'asdf sdf asdf',
-                'asdf sdf asdf',
-                'asdf sdf asdf',
-                'asdf sdf asdf',
-                'asdf sdf asdf',
-                'asdf sdf asdf',
-                'asdf sdf asdf',
-                'asdf sdf asdf',
-                'asdf sdf asdf',
-                'asdf sdf asdf',
-                'asdf sdf asdf',
-                'asdf sdf asdf',
-                'asdf sdf asdf',
-                'asdf sdf asdf',
-            ]);
+            selectTag.$set('maxMenuHeight', 40);
+            selectTag.$set('maxDisplayItems', 5);
+            var items = [];
+            for (var i = 0; i < 50; i++) {
+                items.push('asdf ' + i);
+            }
+            selectTag.$set('items', items);
         }
     })
 })
